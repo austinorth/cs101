@@ -13,11 +13,11 @@ typedef struct node {
     int val;
 } node;
 
-// linked_list represents a circular, doubly linked list. The sentinal node
+// linked_list represents a circular, doubly linked list. The sentinel node
 // does not store any data, and therefore does not count towards the size of
 // the linked list.
 typedef struct {
-    node* sentinal;
+    node* sentinel;
     int size;
 } linked_list;
 

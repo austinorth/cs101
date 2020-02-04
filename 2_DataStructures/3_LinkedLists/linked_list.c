@@ -19,7 +19,9 @@ static node* new_node() {
 // list.
 static void insert_node_after(node* n, node* newNode) {
         newNode->next = n->next;
+        n->next->prev = newNode;
         n->next = newNode;
+        newNode->prev = n;
         return;
 }
 
@@ -65,7 +67,7 @@ void linked_list_push_front(linked_list* l, int i) {
     //  - Allocating memory for a new node
     //  - Setting the value of the new node to i
     //  - Calling insert_node_after to insert the new node after the sentinel node
-    //  - Incrementing the size field of the linked listi
+    //  - Incrementing the size field of the linked list
     struct node* n = new_node();
     n->val = i;
     insert_node_after(l->sentinel, n);
@@ -89,8 +91,8 @@ int linked_list_pop_front(linked_list* l) {
         return -1;
     }
     else {
-        int i = l->sentinel->val;
-        remove_node(l->sentinel);
+        int i = l->sentinel->next->val;
+        remove_node(l->sentinel->next);
         l->size--;
         return i;
     }

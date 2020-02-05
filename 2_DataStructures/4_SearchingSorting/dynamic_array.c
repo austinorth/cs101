@@ -72,10 +72,49 @@ void dyn_arr_insertion_sort(dyn_arr *a) {
         a->array[j] = tmp;
     }
 }
+// Austin's Functions for Merge Sort
+
+// Function to get minimum of two numbers
+int min(int x, int y) {
+    if (x < y) {
+        return x;
+    } else {
+        return y;
+    }
+}
+
+// Function to merge two arrays
+void merge(dyn_arr *a, dyn_arr *tmp, int start, int mid, int end) {
+    int i = start;
+    int j = mid + 1;
+    int k = start;
+
+}
+
+// Function to merge sort an array
+void merge_sort (dyn_arr *a) {
+    
+    dyn_arr* tmp = new_dyn_arr();
+    for (int i=0; i <= a->size; i++) {
+        dyn_arr_add(tmp, a->array[i]);
+    }
+
+    for (int i=0; i < a->size; i = 2*i) {
+        for (int j=0; j < a->size; j += 2*i) {
+            int start = j;
+            int mid = j + m - 1;
+            int end = min(j + 2*i -1, a->size);
+            merge(a, tmp, start, mid, end);
+        }
+    }
+}
 
 void dyn_arr_sort(dyn_arr *a) {
     // TODO: Implement a O(n log n) sorting algorithm (e.g. merge sort, quick
     // sort, or heap sort). The operation should modify the array in-place.
+    //
+    merge_sort(a);
+    return;
 }
 
 int dyn_arr_size(dyn_arr *a) {

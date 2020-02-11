@@ -85,25 +85,57 @@ int min(int x, int y) {
 
 // Function to merge two arrays
 void merge(dyn_arr *a, dyn_arr *tmp, int start, int mid, int end) {
-    int i = start;
-    int j = mid + 1;
-    int k = start;
+
+    // Initialize index variables
+    int i_start = start;
+    int i_center = mid + 1;
+    int tmp_i = start;
+    
+    // Copy lowest values to the temp array
+    while (i_start <= mid && i_center <= end) {
+        if (a->array[i_start] < a->array[i_center]) {
+            tmp->array[tmp_i] = a->array[i_start];
+            tmp_i++;
+            i_start++;
+        } else {
+            tmp->array[tmp_i] = a->array[i_center];
+            tmp_i++;
+            i_center++;
+        }
+    }
+
+    // Copy over the rest of the array
+    while (i_start < a->size && i_start <= mid) {
+        tmp->array[tmp_i] = a->array[i_start];
+        tmp_i++;
+        i_start++;
+    }
+
+    // Copy back to the original array
+    for (int i = start; i <= end; i++) {
+        a->array[i] = tmp->array[i];
+    }
+
 
 }
 
 // Function to merge sort an array
 void merge_sort (dyn_arr *a) {
-    
+
+    // Copy a to temporary array
     dyn_arr* tmp = new_dyn_arr();
-    for (int i=0; i <= a->size; i++) {
+    for (int i=0; i < a->size; i++) {
         dyn_arr_add(tmp, a->array[i]);
     }
 
-    for (int i=0; i < a->size; i = 2*i) {
-        for (int j=0; j < a->size; j += 2*i) {
+    // Chop up array into chunks of size i
+    for (int i=1; i <= a->size; i = 2*i) {
+
+        // Iterate through the chunks and merge each pair together into a.
+        for (int j=0; j < a->size - 1; j += 2*i) {
             int start = j;
-            int mid = j + m - 1;
-            int end = min(j + 2*i -1, a->size);
+            int mid = j + i - 1;
+            int end = min(j + 2*i - 1, a->size - 1);
             merge(a, tmp, start, mid, end);
         }
     }
